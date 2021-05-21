@@ -30,3 +30,5 @@ client/dist/**/*
 files/**/*
 
 build/**/*
+
+*.sqlite

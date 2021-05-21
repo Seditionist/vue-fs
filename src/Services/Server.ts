@@ -1,20 +1,24 @@
 import express from "express";
+import debug from "debug";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import { createHttpTerminator, HttpTerminator } from "http-terminator";
 
-import { Logger } from "../Utilities/Logger";
 import { Config } from "../Utilities/Config";
 import { router } from "../Controllers";
+import ErrorHandler from "../Middleware/ErrorHandler";
 
 export class Server {
+	private static logSystem = debug("vue-fs:api:system");
+	private static logEvent = debug("vue-fs:api:event");
+	private static logError = debug("vue-fs:api:error");
 
 	private static port = Config.Options.PORT;
 
 	private static terminator: HttpTerminator;
 
 	public static async Setup(): Promise<void> {
-		Logger.System("Starting server...");
+		this.logSystem("Starting server...");
 
 		const app = express();
 
@@ -25,17 +29,21 @@ export class Server {
 
 		app.use("/", router);
 
-		const server = app.listen(Server.port, () => {
-			Logger.System(`Server running on port: ${Server.port}`);
+		ErrorHandler.Setup(Server.logError);
+
+		app.use(ErrorHandler.Middleware);
+
+		const server = app.listen(this.port, () => {
+			this.logSystem(`Server running on port: ${this.port}`);
 		});
 
-		Server.terminator = createHttpTerminator({
+		this.terminator = createHttpTerminator({
 			server: server
 		});
 	}
 
 	public static async Close(): Promise<void> {
-		await Server.terminator.terminate();
-		Logger.Event("Closed server.");
+		await this.terminator.terminate();
+		this.logEvent("Closed server.");
 	}
 }

@@ -9,7 +9,7 @@ import { UploadedFile } from "express-fileupload";
 
 import { DateTime } from "../Utilities/DateTime";
 import { Path } from "../Utilities/Path";
-import { Logger } from "../Utilities/Logger";
+import { Logger } from "../Services/Logger";
 
 export const router = Router();
 

@@ -4,6 +4,10 @@
   "description": "vue-fs backend",
   "main": "build/index.js",
   "scripts": {
+    "db:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n",
+    "db:create": "ts-node ./node_modules/typeorm/cli.js migration:create -n",
+    "db:down": "ts-node ./node_modules/typeorm/cli.js migration:revert",
+    "db:up": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "start": "node build/.",
     "build": "tsc",
     "lint": "eslint --fix --ext .ts,.tsx .",
@@ -14,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "archiver": "^5.3.0",
+    "class-transformer": "^0.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
@@ -21,7 +26,9 @@
     "http-terminator": "^3.0.0",
     "mv": "^2.1.1",
     "path": "^0.12.7",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.2",
+    "typeorm": "^0.2.32"
   },
   "devDependencies": {
     "@types/archiver": "^5.1.0",
