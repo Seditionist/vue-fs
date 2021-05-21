@@ -3,7 +3,7 @@ import "dotenv/config";
 import { ExitHandler } from "./Utilities/ExitHandler";
 import { Server } from "./Utilities/Server";
 
-const start = async (): Promise<void> => {
+(async (): Promise<void> => {
 	ExitHandler.Setup();
 
 	await Server.Setup();
@@ -11,6 +11,4 @@ const start = async (): Promise<void> => {
 	ExitHandler.Configure(async () => {
 		await Server.Close();
 	});
-};
-
-start();
+})();

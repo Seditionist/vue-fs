@@ -7,9 +7,9 @@ import { Logger } from "../Utilities/Logger";
 import { Config } from "../Utilities/Config";
 import { router } from "../Controllers";
 
-const port = Config.Options.PORT;
-
 export class Server {
+
+	private static port = Config.Options.PORT;
 
 	private static terminator: HttpTerminator;
 
@@ -25,8 +25,8 @@ export class Server {
 
 		app.use("/", router);
 
-		const server = app.listen(port, () => {
-			Logger.System(`Server running on port: ${port}`);
+		const server = app.listen(Server.port, () => {
+			Logger.System(`Server running on port: ${Server.port}`);
 		});
 
 		Server.terminator = createHttpTerminator({
