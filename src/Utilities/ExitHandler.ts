@@ -1,22 +1,24 @@
-const { cwd } = require("process");
-const debug = require("debug");
+import { cwd } from "process";
+import debug from "debug";
 
 const logError = debug("vue-fs:exit");
 
-class ExitHandler {
-	static cleanupHandler() {
+export class ExitHandler {
+
+	public static async cleanupHandler(): Promise<void> {
 		logError("No cleanup handler subscription.");
 	}
 
-	static Setup() {
-		process.on("uncaughtException", (err) => {
+	public static Setup(): void {
+
+		process.on("uncaughtException", (err: Error) => {
 			const error = (err ? err.stack || err : "").toString();
 			const errorMsg = this.CleanPath(error);
 			this.Terminate(1, errorMsg);
 		});
 
-		process.on("unhandledRejection", (err) => {
-			const errorMsg = `Uncaught Promise error: \n${this.CleanPath(err.stack)}`;
+		process.on("unhandledRejection", (err: Error) => {
+			const errorMsg = `Uncaught Promise error: \n${this.CleanPath(err.stack as string)}`;
 			this.Terminate(1, errorMsg);
 		});
 
@@ -31,11 +33,11 @@ class ExitHandler {
 		});
 	}
 
-	static Configure(cleanup) {
+	public static Configure(cleanup: () => Promise<void>): void {
 		this.cleanupHandler = cleanup;
 	}
 
-	static CleanPath(message) {
+	public static CleanPath(message: string): string {
 		if (message === undefined)
 			return "";
 
@@ -45,7 +47,7 @@ class ExitHandler {
 		return message.replace(regex, ".\\");
 	}
 
-	static async Terminate(code, message) {
+	public static async Terminate(code: number, message: string): Promise<void> {
 		// Exit function
 		const exit = () => {
 			process.exit(code);
@@ -64,5 +66,3 @@ class ExitHandler {
 		exit();
 	}
 }
-
-module.exports = ExitHandler;

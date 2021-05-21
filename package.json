@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "lint": "eslint --fix --ext .js,.jsx .",
+	"build": "tsc",
+    "lint": "eslint --fix --ext .ts,.tsx .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
   },
@@ -23,10 +24,17 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@types/archiver": "^5.1.0",
+    "@types/cors": "^2.8.10",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.11",
+    "@types/express-fileupload": "^1.1.6",
+    "@types/mv": "^2.1.1",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
     "@typescript-eslint/parser": "^4.24.0",
     "dotenv": "^9.0.2",
     "eslint": "^7.26.0",
-    "eslint-plugin-vue": "^7.9.0"
+    "eslint-plugin-vue": "^7.9.0",
+    "typescript": "^4.2.4"
   }
 }

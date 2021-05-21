@@ -1,29 +1,27 @@
-const debug = require("debug");
+import debug from "debug";
 
-const DateTime = require("./DateTime");
+import { DateTime } from "./DateTime";
 
 const logSystem = debug("vue-fs:system");
 const logEvent = debug("vue-fs:event");
 const logError = debug("vue-fs:error");
 const logWarn = debug("vue-fs:warn");
 
-class Logger {
+export class Logger {
 
-	static System(log) {
+	public static System(log: unknown): void {
 		logSystem("\x1b[36m%s\x1b[0m", log, `- ${DateTime.Now()}`);
 	}
-    
-	static Event(log) {
+
+	public static Event(log: unknown): void {
 		logEvent(log, `- ${DateTime.Now()}`);
 	}
-    
-	static Warn(log) {
+
+	public static Warn(log: unknown): void {
 		logWarn("\x1b[33m%s\x1b[0m", log, `- ${DateTime.Now()}`);
 	}
-	
-	static Error(log) {
+
+	public static Error(log: unknown): void {
 		logError("\x1b[31m%s\x1b[0m", log, `- ${DateTime.Now()}`);
 	}
 }
-
-module.exports = Logger;

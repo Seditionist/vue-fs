@@ -1,12 +1,12 @@
-const fs = require("fs");
+import fs from "fs";
 
-class DateTime {
+export class DateTime {
 
-	static Time(now) {
+	public static Time(now: Date): string {
 		return Intl.DateTimeFormat("en", { hour: "numeric", minute: "numeric", hour12: true }).format(now);
 	}
 
-	static Now() {
+	public static Now(): string {
 
 		const _now = new Date();
 		const time = DateTime.Time(_now);
@@ -21,10 +21,10 @@ class DateTime {
 			}
 		);
 
-		return(`${_Date} ${time}`);
+		return (`${_Date} ${time}`);
 	}
 
-	static Format(date) {
+	public static Format(date: Date): string {
 
 		const _now = new Date(date);
 
@@ -38,14 +38,11 @@ class DateTime {
 			}
 		);
 
-		return(_Date);
+		return (_Date);
 	}
 
-	// Format the last time a file was edited/created
-	static lastUpdatedDate(file) {
+	public static lastUpdatedDate(file: fs.PathLike): string {
 		const { ctime } = fs.statSync(file);
 		return DateTime.Format(ctime);
 	}
 }
-
-module.exports = DateTime;
