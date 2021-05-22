@@ -10,7 +10,7 @@ export class Folder extends Base {
 	@Index()
 	@ManyToOne(() => Folder)
 	@Column({ type: "int", name: "ParentFolderID", nullable: true })
-	ParentFolderID: number
+	ParentFolderID: number | null
 
 
 	@Column({ type: "nvarchar", name: "FolderName", nullable: false, length: "50" })

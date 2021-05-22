@@ -48,36 +48,67 @@ router.post("/createSub", async (req, res, next) => {
 	}
 });
 
-// router.post("/rename", (req, res) => {
-// 	return res.json({
-// 		ok: true,
-// 		status: 200,
-// 		data: "success"
-// 	});
-// });
+router.post("/rename", async (req, res, next) => {
+	try {
+		const { uid, name } = req.body;
 
-// router.post("/move", (req, res) => {
-// 	return res.json({
-// 		ok: true,
-// 		status: 200,
-// 		data: "success"
-// 	});
-// });
+		const folder = await Folder.Rename(uid, name);
 
-// router.post("/delete", (req, res) => {
-// 	return res.json({
-// 		ok: true,
-// 		status: 200,
-// 		data: "success"
-// 	});
-// });
+		return res.json({
+			ok: true,
+			status: 200,
+			data: folder
+		});
+	} catch (error) {
+		return next(error);
+	}
+});
 
-// router.post("/download", (req, res) => {
-// 	return res.json({
-// 		ok: true,
-// 		status: 200,
-// 		data: "success"
-// 	});
+router.post("/move", async (req, res, next) => {
+	try {
+		const { uid, parent } = req.body;
+
+		const folder = await Folder.Move(uid, parent);
+
+		return res.json({
+			ok: true,
+			status: 200,
+			data: folder
+		});
+	} catch (error) {
+		return next(error);
+	}
+});
+
+router.post("/delete", async (req, res, next) => {
+	try {
+		const { uid } = req.body;
+
+		await Folder.Delete(uid);
+
+		return res.json({
+			ok: true,
+			status: 200,
+			data: "success"
+		});
+	} catch (error) {
+		return next(error);
+	}
+});
+
+// router.get("/download/:uid?", async (req, res, next) => {
+// 	try {
+// 		const folder = await Folder.GetFolders(req.params.uid);
+
+
+// 		return res.json({
+// 			ok: true,
+// 			status: 200,
+// 			data: "success"
+// 		});
+// 	} catch (error) {
+// 		return next(error);
+// 	}
 // });
 
 export default router;

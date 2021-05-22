@@ -53,4 +53,48 @@ export class Folder {
 			throw new Error(error);
 		}
 	}
+
+	public static async Rename(uid: string, name: string): Promise<_Folder> {
+		try {
+			const folder = await _Folder.findOne({ uid });
+			if (!folder) throw "folder not found";
+
+			folder.FolderName = name;
+
+			return await folder.save();
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
+	public static async Move(targetUID: string, parentUID?: string): Promise<_Folder> {
+		try {
+			const target = await _Folder.findOne({ uid: targetUID });
+			if (!target) throw "target folder not found";
+
+			if (parentUID) {
+				const parent = await _Folder.findOne({ uid: parentUID });
+				if (!parent) throw "parent folder not found";
+
+				target.ParentFolderID = parent.id;
+			}
+			else
+				target.ParentFolderID = null;
+
+			return await target.save();
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
+	public static async Delete(uid: string): Promise<void> {
+		try {
+			const folder = await _Folder.findOne({ uid });
+			if (!folder) throw "folder not found";
+
+			await folder.remove();
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
 }
