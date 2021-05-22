@@ -23,13 +23,13 @@ export class Database {
 
 	public static async Connect(): Promise<void> {
 
-		this.logSystem("Connecting to db...");
+		Database.logSystem("Connecting to db...");
 
 		let connection: Connection | undefined;
 		try {
 			connection = getConnection();
 		} catch (e) {
-			this.logError(`error connecting to database ${e}`);
+			Database.logError(`error connecting to database ${e}`);
 		}
 
 
@@ -40,9 +40,9 @@ export class Database {
 			} else
 				await createConnection(Database.ormconfig);
 
-			this.logSystem("successfully connected to database");
+			Database.logSystem("successfully connected to database");
 		} catch (e) {
-			this.logError(`error connecting to database ${e}`);
+			Database.logError(`error connecting to database ${e}`);
 			throw Error(e);
 		}
 	}
@@ -51,7 +51,7 @@ export class Database {
 		try {
 			const connection = getConnection();
 			await connection.close();
-			this.logEvent("Closed database connection.");
+			Database.logEvent("Closed database connection.");
 		} catch (error) {
 			throw Error(error);
 		}

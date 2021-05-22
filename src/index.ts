@@ -1,4 +1,5 @@
 import "dotenv/config";
+import "reflect-metadata";
 
 import { ExitHandler } from "./Utilities/ExitHandler";
 import { Server } from "./Services/Server";

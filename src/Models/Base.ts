@@ -1,5 +1,5 @@
 import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Index, PrimaryGeneratedColumn } from "typeorm";
-import { Exclude } from "class-transformer";
+import { classToPlain, Exclude } from "class-transformer";
 
 import { Generic } from "../Utilities/Generic";
 
@@ -17,7 +17,11 @@ export abstract class Base extends BaseEntity {
 	createdAt: Date
 
 	@BeforeInsert()
-	sed(): void {
+	seed(): void {
 		this.uid = Generic.CreateUUID();
+	}
+
+	toJSON(): Record<string, unknown> {
+		return classToPlain(this);
 	}
 }

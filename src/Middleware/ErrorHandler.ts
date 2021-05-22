@@ -5,14 +5,14 @@ export default class ErrorHandler {
 	private static logError: Debugger;
 
 	public static Setup(log: Debugger): void {
-		this.logError = log;
+		ErrorHandler.logError = log;
 	}
 
 	public static async Middleware(err: Errback, _req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		if (!err)
 			return next();
 
-		this.logError(err);
+		ErrorHandler.logError(err);
 		return res.status(500).json({
 			ok: false,
 			status: 500,

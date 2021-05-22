@@ -13,28 +13,28 @@ export class ExitHandler {
 
 		process.on("uncaughtException", (err: Error) => {
 			const error = (err ? err.stack || err : "").toString();
-			const errorMsg = this.CleanPath(error);
-			this.Terminate(1, errorMsg);
+			const errorMsg = ExitHandler.CleanPath(error);
+			ExitHandler.Terminate(1, errorMsg);
 		});
 
 		process.on("unhandledRejection", (err: Error) => {
-			const errorMsg = `Uncaught Promise error: \n${this.CleanPath(err.stack as string)}`;
-			this.Terminate(1, errorMsg);
+			const errorMsg = `Uncaught Promise error: \n${ExitHandler.CleanPath(err.stack as string)}`;
+			ExitHandler.Terminate(1, errorMsg);
 		});
 
 		process.on("SIGTERM", () => {
 			const errorMsg = `Process ${process.pid} received a SIGTERM signal`;
-			this.Terminate(0, errorMsg);
+			ExitHandler.Terminate(0, errorMsg);
 		});
 
 		process.on("SIGINT", () => {
 			const errorMsg = `Process ${process.pid} has been interrupted`;
-			this.Terminate(0, errorMsg);
+			ExitHandler.Terminate(0, errorMsg);
 		});
 	}
 
 	public static Configure(cleanup: () => Promise<void>): void {
-		this.cleanupHandler = cleanup;
+		ExitHandler.cleanupHandler = cleanup;
 	}
 
 	public static CleanPath(message: string): string {
@@ -59,8 +59,8 @@ export class ExitHandler {
 		setTimeout(exit, 500).unref();
 
 		// Attempt a graceful shutdown
-		if (this.cleanupHandler != undefined) {
-			await this.cleanupHandler();
+		if (ExitHandler.cleanupHandler != undefined) {
+			await ExitHandler.cleanupHandler();
 		}
 
 		exit();

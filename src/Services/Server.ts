@@ -18,7 +18,7 @@ export class Server {
 	private static terminator: HttpTerminator;
 
 	public static async Setup(): Promise<void> {
-		this.logSystem("Starting server...");
+		Server.logSystem("Starting server...");
 
 		const app = express();
 
@@ -33,17 +33,17 @@ export class Server {
 
 		app.use(ErrorHandler.Middleware);
 
-		const server = app.listen(this.port, () => {
-			this.logSystem(`Server running on port: ${this.port}`);
+		const server = app.listen(Server.port, () => {
+			Server.logSystem(`Server running on port: ${Server.port}`);
 		});
 
-		this.terminator = createHttpTerminator({
+		Server.terminator = createHttpTerminator({
 			server: server
 		});
 	}
 
 	public static async Close(): Promise<void> {
-		await this.terminator.terminate();
-		this.logEvent("Closed server.");
+		await Server.terminator.terminate();
+		Server.logEvent("Closed server.");
 	}
 }
