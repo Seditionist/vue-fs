@@ -26,4 +26,12 @@ export class Generic {
 			throw new Error(error);
 		}
 	}
+
+	public static Base64ToBuffer(base64: string): Buffer {
+		try {
+			return Buffer.from(base64, "base64");
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
 }

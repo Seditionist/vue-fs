@@ -1,4 +1,4 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Index, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, PrimaryGeneratedColumn } from "typeorm";
 import { classToPlain, Exclude } from "class-transformer";
 
 import { Generic } from "../Utilities/Generic";
@@ -9,7 +9,6 @@ export abstract class Base extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Index()
 	@Column({ unique: true, nullable: true })
 	uid: string
 

@@ -25,7 +25,10 @@ export class Server {
 		app.use(cors());
 		app.use(express.json());
 		app.use(express.urlencoded({ extended: false }));
-		app.use(fileUpload());
+		app.use(fileUpload({
+			limits: { fileSize: 20 * 1024 * 1024 },
+			abortOnLimit: true
+		}));
 
 		app.use("/", router);
 

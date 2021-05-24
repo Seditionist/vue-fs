@@ -1,16 +1,16 @@
-import { Column, Entity, ManyToOne, Index } from "typeorm";
+import { Column, ManyToOne, Index, Entity } from "typeorm";
 
 import { Base } from "./Base";
 import { Folder } from "./Folder";
 
 @Entity("Files")
-@Index(["FolderID", "FileName"], { unique: true })
+@Index("IX_Folder_File", ["FolderID", "FileName", "FileExtension"], { unique: true })
 export class File extends Base {
 
-	@Index()
+	@Index("IX_FolderID")
 	@ManyToOne(() => Folder)
-	@Column({ type: "int", name: "FolderID", nullable: false })
-	FolderID: number
+	@Column({ type: "int", name: "FolderID", nullable: true })
+	FolderID: number | null
 
 	@Column({ type: "nvarchar", name: "FileName", nullable: false, length: "50" })
 	FileName: string

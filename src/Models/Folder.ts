@@ -1,17 +1,16 @@
-import { Column, OneToMany, ManyToOne, Entity, Index } from "typeorm";
+import { Column, OneToMany, ManyToOne, Index, Entity } from "typeorm";
 
 import { Base } from "./Base";
 import { File } from "./File";
 
 @Entity("Folders")
-@Index(["ParentFolderID", "FolderName"], { unique: true })
+@Index("IX_Parent_Child", ["ParentFolderID", "FolderName"], { unique: true })
 export class Folder extends Base {
 
-	@Index()
+	@Index("IX_FolderName")
 	@ManyToOne(() => Folder)
 	@Column({ type: "int", name: "ParentFolderID", nullable: true })
 	ParentFolderID: number | null
-
 
 	@Column({ type: "nvarchar", name: "FolderName", nullable: false, length: "50" })
 	FolderName: string

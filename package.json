@@ -29,6 +29,7 @@
     "path": "^0.12.7",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
+    "sanitize-filename": "^1.6.3",
     "sqlite3": "^5.0.2",
     "typeorm": "^0.2.32"
   },
